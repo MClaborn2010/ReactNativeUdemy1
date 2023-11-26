@@ -1,13 +1,18 @@
 import { React, useState } from "react";
-import { Button } from "react-native";
-import { Text, StyleSheet, View } from "react-native";
+import { Text, StyleSheet, View, Button } from "react-native";
 
-const ComponentsScreen = () => {
+const ComponentsScreen = (props) => {
   const name = "Michael";
   return (
     <View>
       <Text style={styles.textStyle}>Getting started with react native!</Text>
       <Text style={styles.secondaryText}>My name is {name}!</Text>
+      <Button
+        title="Go to Home"
+        onPress={() => {
+          props.navigation.navigate("Home");
+        }}
+      />
     </View>
   );
 };
