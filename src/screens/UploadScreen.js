@@ -35,11 +35,17 @@ const UploadScreen = ({ navigation }) => {
       });
   }, [term]);
   useEffect(() => {
-    console.log(organization);
-    // handleEpic(
-    //   "https://epicproxy-pub.et1089.epichosted.com/FHIRProxy/oauth2/authorize"
-    // );
+    // Check if organization is defined and has meta array with at least one item
+    if (organization && organization.meta && organization.meta.length > 0) {
+      // Check if the url property exists in the first item of the meta array
+      const epicURL = organization.meta[0].url;
+      if (epicURL) {
+        // Call handleEpic with the modified URL
+        handleEpic(epicURL.replace(/\/api\/FHIR\/R4\/$/, "/oauth2/authorize"));
+      }
+    }
   }, [organization]);
+
   return (
     <View>
       <TextInput
@@ -83,7 +89,7 @@ const UploadScreen = ({ navigation }) => {
               //   title={org.source}
               //   onPress={() => setModalVisible(false)}
               // />
-              <TouchableOpacity>
+              <TouchableOpacity key={org.id}>
                 <Text>{org.source}</Text>
               </TouchableOpacity>
             ))}
